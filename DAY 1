@@ -1,0 +1,117 @@
+1 . Trie implementation ( I & II )
+
+
+class Node{
+
+    boolean isEnd;
+    Node children[];
+    int count;
+    Node(){
+
+        this.isEnd = false;
+        this.children = new Node[26];
+        this.count =0;
+    }
+}
+public class Trie {
+
+    Node root ;
+    public Trie() {
+        // Write your code here.
+        this.root = new Node();
+    }
+
+    public void insert(String word) {
+        // Write your code here.
+        Node cur = root;
+        for (int i =0;i<word.length();i++){
+
+            int idx = word.charAt(i) - 'a';
+
+            if (cur.children[idx] == null){
+
+                cur.children[idx] = new Node();
+                cur.children[idx].count +=1;
+            }
+            else{
+                cur.children[idx].count +=1;
+            }
+            cur = cur.children[idx];
+        }
+        //cur.count +=1;
+        cur.isEnd = true;
+    }
+
+    public int countWordsEqualTo(String word) {
+        // Write your code here.
+
+        Node cur = root;
+        for (int i =0 ;i<word.length();i++){
+
+            int idx = word.charAt(i) - 'a';
+
+            if (cur.children[idx] == null) return 0;
+
+            cur = cur.children[idx];
+        }
+        if (cur.isEnd == true) return cur.count;
+        return 0;
+    }
+
+    public int countWordsStartingWith(String prefix) {
+        // Write your code here.
+
+         Node cur = root;
+
+        for(int i =0 ;i < prefix.length();i++){
+
+            int idx = prefix.charAt(i) - 'a';
+
+            if (cur.children[idx] == null) return 0;
+
+            cur = cur.children[idx];
+        }
+
+        return cur.count;
+    }
+
+    public void erase(String word) {
+        // Write your code here.
+        if (search(word) == false){
+            System.out.println("no word");
+            return;
+        } 
+        Node cur = root;
+        
+        for (int i =0 ;i < word.length() ;i++){
+
+            int idx = word.charAt(i) - 'a';
+
+            if (cur.children[idx] == null) return;
+            
+            cur.children[idx].count--;
+
+            cur = cur.children[idx];
+        }
+
+        //cur.count -=1;
+        if (cur.count != 0) return;
+        cur.isEnd = false;
+        return;
+    }
+
+    public boolean search(String word) {
+        //Write your code here
+        Node cur = root;
+        for (int i =0 ;i<word.length();i++){
+
+            int idx = word.charAt(i) - 'a';
+
+            if (cur.children[idx] == null) return false;
+
+            cur = cur.children[idx];
+        }
+        return cur.isEnd;
+    }
+
+}
