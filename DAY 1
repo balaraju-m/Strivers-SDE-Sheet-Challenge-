@@ -151,4 +151,43 @@ class Solution {
     }
 }
 
-2.
+2.maximum sum increasing subsequence
+
+class Solution
+{
+    public int recur (int curInd , int prevInd , int n ,int arr[] ,int dp[][]){
+        
+        if (curInd < n ){
+            
+        if (dp[curInd+1][prevInd+1]  != -1) return dp[curInd+1][prevInd+1];
+        
+        int take =0;
+        
+        int notTake = 0 + recur (curInd+1 , prevInd , n , arr ,dp);
+        
+        if (prevInd == -1 || arr[curInd] > arr[prevInd] ){
+            
+            take = arr[curInd] + recur (curInd+1 , curInd , n , arr ,dp);
+        }
+        
+        return dp[curInd+1][prevInd+1] = Math.max(take , notTake);
+        }
+       
+       return 0;
+       
+    }
+	public int maxSumIS(int arr[], int n)  
+	{  
+	    //code here.
+	    //int n = arr.length;
+	    int dp[][] = new int[n+1][n+1];
+	    
+	    for (int num[] : dp){
+	        
+	        Arrays.fill(num ,-1);
+	    }
+	    return recur (0 , -1 , n , arr ,dp);
+	}  
+}
+
+3.
