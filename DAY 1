@@ -6,7 +6,7 @@ class Node{
     boolean isEnd;
     Node children[];
     int count;
-    Node(){
+    Node(){        
 
         this.isEnd = false;
         this.children = new Node[26];
@@ -115,3 +115,40 @@ public class Trie {
     }
 
 }
+
+
+day 3 :
+
+topic : dynamic programming I
+
+1.max product
+
+class Solution {
+    public int maxProduct(int[] nums) {
+
+        int maxi_prod = nums[0];
+
+        int imin = nums[0];
+        int imax = nums[0];
+
+        for (int i =1 ; i< nums.length;i++){
+
+                if (nums[i] < 0){
+
+                    int temp = imin;
+                    imin = imax;
+                    imax = temp;
+                }  
+
+                imax = Math.max(nums[i] , imax*nums[i]);
+                imin = Math.min(nums[i] , imin * nums[i]);
+                maxi_prod = Math.max(maxi_prod , imax);
+
+
+        }
+        return maxi_prod;
+        
+    }
+}
+
+2.
