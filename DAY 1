@@ -3,7 +3,7 @@
 
 class Node{
 
-    boolean isEnd;
+    boolean isEnd;  
     Node children[];
     int count;
     Node(){        
@@ -190,4 +190,64 @@ class Solution
 	}  
 }
 
-3.
+3.MCM
+
+public static int recur (int start , int end ,int arr[],int dp[][] ){
+
+		if (start == end) return 0;
+		
+		if (dp[start][end] != -1) return dp[start][end];
+		int mini = Integer.MAX_VALUE;
+
+		for (int k = start ; k<end;k++ ){
+
+				int ans = arr[start-1] * arr[k] *arr[end] + recur (start ,k,arr,dp ) +recur(k+1,end,arr,dp);
+
+				mini = Math.min(mini ,ans);
+		}
+		return dp[start][end] = mini;
+	}
+	public static int matrixMultiplication(int[] arr , int N) {
+		
+		int dp[][] = new int[N][N];
+		for (int num[]: dp){
+
+			Arrays.fill(num , -1);
+		}
+		return recur (1 , N-1 ,arr ,dp);
+	}
+}
+
+4.Rod cutting problem
+
+public class Solution {
+
+	public static int recur (int cutSize , int totlen ,int price[],int dp[][] ){
+
+			if (totlen <= 0 || cutSize <=0) return 0;
+
+			if (dp[cutSize][totlen] != -1) return dp[cutSize][totlen];
+			int take =0;
+
+			int notTake = 0 + recur (cutSize-1 , totlen , price ,dp);
+
+			if (totlen >= cutSize){
+
+				take = price[cutSize-1] + recur (cutSize , totlen-cutSize , price ,dp);
+			}
+
+			return dp[cutSize][totlen] = Math.max(take , notTake);
+	}
+	public static int cutRod(int price[], int n) {
+		// Write your code here.
+
+		int dpp[][] = new int[n+1][n+1];
+		for (int num[]: dpp){
+
+			Arrays.fill(num , -1);
+		}
+		return recur (n,n , price ,dpp);
+	}
+}
+
+
