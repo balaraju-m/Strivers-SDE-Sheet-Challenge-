@@ -250,4 +250,55 @@ public class Solution {
 	}
 }
 
+Day 4:
+
+5.Minimum Cost to Cut a Stick/ Cost to Cut a Chocolate 
+
+public static int recur (int start , int end , int cuts1[] , int dp[][]){
+
+        if (start > end) return 0;
+
+        if (dp[start][end] != -1) return dp[start][end];
+
+        int mini = (int)1e9;
+        for (int i = start ; i <= end ;i++){
+
+            int ans = cuts1[end+1] - cuts1[start-1] + recur (start , i-1,cuts1,dp) + recur(i+1 , end , cuts1 ,dp);
+
+            mini = Math.min(ans , mini);
+        }
+
+        return dp[start][end] = mini;
+    }
+    public static int cost(int n, int c, int cuts[]) {
+        
+        // int n1 = cuts.length+2;
+        Arrays.sort(cuts);
+        int cuts1[] = new int[c+2];
+
+        int dp[][] = new int[c+1][c+1];
+
+        for (int num[] : dp){
+
+            Arrays.fill(num , -1);
+        }
+        cuts1[0] = 0;
+
+        for (int i =1; i <= c;i++){
+
+            cuts1[i] = cuts[i-1];
+        }
+
+        cuts1[c+1] = n;
+
+        return recur (1 ,c,cuts1 ,dp);
+
+
+    }
+
+}
+
+6.
+
+
 
